@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Filter</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .product { margin: 5px 0; }
+    input { margin: 5px; padding: 5px; }
+    button { padding: 5px 10px; }
+  </style>
+</head>
+<body>
+  <h2>Product List</h2>
+  <div>
+    <label>Min Price: </label>
+    <input type="number" id="minPrice" />
+    <label>Max Price: </label>
+    <input type="number" id="maxPrice" />
+    <button id="filterBtn">Filter</button>
+  </div>
+
+  <h3>Products</h3>
+  <ul id="productList"></ul>
+
+  <script>
+    const products = [
+      { name: "Apple", price: 50 },
+      { name: "Banana", price: 30 },
+      { name: "Cherry", price: 70 }
+    ];
+
+    const productList = document.getElementById("productList");
+
+    function displayProducts(list) {
+      productList.innerHTML = "";
+      list.forEach(p => {
+        const li = document.createElement("li");
+        li.className = "product";
+        li.textContent = `${p.name} ($${p.price})`;
+        productList.appendChild(li);
+      });
+    }
+
+    document.getElementById("filterBtn").addEventListener("click", () => {
+      const min = parseInt(document.getElementById("minPrice").value) || 0;
+      const max = parseInt(document.getElementById("maxPrice").value) || Infinity;
+
+      const filtered = products.filter(p => p.price >= min && p.price <= max);
+      displayProducts(filtered);
+    });
+
+    // Show all initially
+    displayProducts(products);
+  </script>
+</body>
+</html>
